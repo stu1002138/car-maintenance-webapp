@@ -1,20 +1,14 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>車健簿 - 愛車保養紀錄系統</title> <!-- 網站名稱/標題 -->
-    <meta name="description" content="輕鬆記錄每次愛車的保養紀錄，掌握保養明細與歷史資料，打造屬於自己的線上車庫。" />
-    <meta name="keywords" content="汽車保養, 保養紀錄, 愛車管理, 車庫, Car Maintenance" />
-    <meta name="author" content="Lucas Chen" />
-    <meta property="og:title" content="車健簿 - 愛車保養紀錄系統" />
-    <meta property="og:description" content="輕鬆記錄每次愛車的保養紀錄，打造專屬車庫。" />
-    <meta property="og:url" content="https://carlog.lucas-chen.website" />
-    <meta property="og:type" content="website" />
+    <meta charset="utf-8">
+    <title>Redirect</title>
+    <script>
+      const path = window.location.pathname;
+      window.location.replace(`/?redirect=${encodeURIComponent(path)}`);
+    </script>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <p>Redirecting...</p>
   </body>
 </html>
