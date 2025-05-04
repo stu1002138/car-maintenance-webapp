@@ -5,6 +5,5 @@ import eslint from 'vite-plugin-eslint'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/car-maintenance-webapp/',
   plugins: [react(), UnoCSS(), eslint()],
 })
