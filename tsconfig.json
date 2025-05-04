@@ -11,10 +11,9 @@
     "baseUrl": ".",
     "paths": {
       "*": ["src/types/*"]
-    }
+    },
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
-  "include": [
-    "src/**/*",
-    "vite.config.ts"
-  ]
+  "include": ["src/**/*", "vite.config.ts"]
 }
