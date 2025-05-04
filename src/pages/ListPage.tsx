@@ -1,11 +1,30 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
 import { db } from '../utils/db';
 import dayjs from 'dayjs'; // Import dayjs
 
+interface Car {
+  id?: number; // Dexie auto-generates 'id' if it's the primary key
+  PlateNo: string;
+  Brand?: string; // Optional, based on your usage
+  LastRepairDate?: string
+}
+
+interface RepairItem {
+  id?: number; // Dexie auto-generates 'id' if it's the primary key
+  RepairDate: string;
+  Vendor: string;
+  RepairItem: string;
+  RepairCode: string;
+  Quantity: string;
+  Amount: string;
+  Mileage: string;
+  PlateNo: string;
+}
+
 export default function ListPage() {
-  const [repairs, setRepairs] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-  const [cars, setCars] = useState([]);
+  const [repairs, setRepairs] = useState<RepairItem[]>([]);
+  const [filtered, setFiltered] = useState<RepairItem[]>([]);
+  const [cars, setCars] = useState<Car[]>([]);
   const [filters, setFilters] = useState({
     startDate: '',
     endDate: '',
@@ -16,8 +35,8 @@ export default function ListPage() {
   // Load repair records and car list
   useEffect(() => {
     const fetchData = async () => {
-      const allRepairs = await db.table('repairs').orderBy('id').toArray();
-      const allCars = await db.table('cars').orderBy('id').toArray();
+      const allRepairs = await db.table('repairs').orderBy('id').toArray()  as SetStateAction<RepairItem[]>;
+      const allCars = await db.table('cars').orderBy('id').toArray()  as SetStateAction<Car[]>;
       setRepairs(allRepairs);
       setFiltered(allRepairs);
       setCars(allCars);
@@ -29,7 +48,7 @@ export default function ListPage() {
   const allRepairItems = Array.from(new Set(repairs.map((r) => r.RepairItem))).filter(Boolean);
 
   // Handle field change
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
@@ -141,7 +160,7 @@ export default function ListPage() {
               ))
             ) : (
               <tr>
-                <td colSpan="8" className="text-center py-4 text-gray-500">
+                <td colSpan={8} className="text-center py-4 text-gray-500">
                   查無資料
                 </td>
               </tr>

@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/seo.tsx","./src/pages/addpage.tsx","./src/pages/carmanager.tsx","./src/pages/index.tsx","./src/pages/listpage.tsx","./src/router/index.tsx","./src/utils/db.ts","./vite.config.ts"],"version":"5.7.3"}

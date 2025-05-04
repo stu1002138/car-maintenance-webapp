@@ -1,6 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, SetStateAction, ChangeEvent, FormEvent } from 'react';
 import { db } from '../utils/db';
 import dayjs from 'dayjs';
+
+interface Car {
+  id?: number; // Dexie auto-generates 'id' if it's the primary key
+  PlateNo: string;
+  Brand?: string; // Optional, based on your usage
+}
 
 export default function AddPage() {
   const [form, setForm] = useState({
@@ -14,20 +20,20 @@ export default function AddPage() {
     Mileage: ''
   });
 
-  const [cars, setCars] = useState([]);
+  const [cars, setCars] = useState<Car[]>([]);
   const [fileMessage, setFileMessage] = useState('');
   const [jsonMessage, setJsonMessage] = useState('');
   const [jsonInput, setJsonInput] = useState('');
 
   useEffect(() => {
     const loadCars = async () => {
-      const allCars = await db.table('cars').toArray();
+      const allCars = await db.table('cars').toArray() as SetStateAction<Car[]>;
       setCars(allCars);
     };
     loadCars();
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     if (name === 'RepairDate') {
       const formattedDate = value ? dayjs(value).format('YYYY/MM/DD') : '';
@@ -37,8 +43,8 @@ export default function AddPage() {
     }
   };
 
-  const handleFileUpload = async (e) => {
-    const file = e.target.files[0];
+  const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
 
     try {
@@ -106,7 +112,7 @@ export default function AddPage() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formattedForm = {
       ...form,

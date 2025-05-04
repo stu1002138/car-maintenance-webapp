@@ -1,5 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent, SetStateAction, FormEvent } from 'react';
 import { db } from '../utils/db';
+
+interface Car {
+  id?: number; // Dexie auto-generates 'id' if it's the primary key
+  PlateNo: string;
+  Brand?: string; // Optional, based on your usage
+  LastRepairDate?: string
+}
 
 export default function CarManager() {
   const [form, setForm] = useState({
@@ -8,23 +15,23 @@ export default function CarManager() {
     LastRepairDate: ''
   });
 
-  const [cars, setCars] = useState([]);
+  const [cars, setCars] = useState<Car[]>([]);
 
   useEffect(() => {
     loadCars();
   }, []);
 
   const loadCars = async () => {
-    const allCars = await db.table('cars').orderBy('id').toArray();
+    const allCars = await db.table('cars').orderBy('id').toArray() as SetStateAction<Car[]>;
     setCars(allCars);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await db.table('cars').add(form);
     setForm({ PlateNo: '', Brand: '', LastRepairDate: '' });

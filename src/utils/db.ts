@@ -1,9 +1,36 @@
-// db.js
-import Dexie from 'dexie';
+import Dexie, { Table } from 'dexie';
 
-export const db = new Dexie('CarRepairDB');
+// Define interfaces for tables
+interface Car {
+  id?: number;
+  PlateNo: string;
+  Brand?: string;
+}
 
-db.version(1).stores({
-  repairs: '++id, PlateNo, RepairDate, Vendor, RepairItem, RepairCode, Quantity, Amount, Mileage',
-  cars: '++id, PlateNo, Brand, LastRepairDate'
-});
+interface Repair {
+  id?: number;
+  PlateNo: string;
+  RepairDate: string;
+  Vendor: string;
+  RepairItem: string;
+  RepairCode: string;
+  Quantity: string;
+  Amount: string;
+  Mileage: string;
+}
+
+// Extend Dexie with typed tables
+class AppDatabase extends Dexie {
+  cars!: Table<Car>;
+  repairs!: Table<Repair>;
+
+  constructor() {
+    super('AppDatabase');
+    this.version(1).stores({
+      cars: '++id, PlateNo, Brand',
+      repairs: '++id, PlateNo, RepairDate, Vendor, RepairItem, RepairCode, Quantity, Amount, Mileage',
+    });
+  }
+}
+
+export const db = new AppDatabase();
