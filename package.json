@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://lucas-chen.github.io/car-maintenance-webapp",
+  "homepage": "https://stu1002138.github.io/car-maintenance-webapp",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
